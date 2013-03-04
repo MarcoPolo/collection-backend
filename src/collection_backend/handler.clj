@@ -1,5 +1,7 @@
 (ns collection-backend.handler
   (:use compojure.core
+        ring.middleware.cors
+        (sandbar stateful-session)
         collection-backend.user-routes )
   (:require [compojure.handler :as handler]
             [compojure.route :as route]
@@ -22,4 +24,8 @@ user-routes
   (route/not-found "Not Found"))
 
 (def app
-  (handler/site app-routes))
+  (->
+    app-routes
+    (wrap-stateful-session)
+    (wrap-cors :access-control-allow-origin #".*")
+    (handler/site)))

@@ -7,15 +7,25 @@
    :db/index true
    :db.install/_attribute :db.part/db}
   {:db/id #db/id[:db.part/db]
+   :db/ident :collection/url
+   :db/valueType :db.type/string
+   :db/cardinality :db.cardinality/one
+   :db.install/_attribute :db.part/db}
+  {:db/id #db/id[:db.part/db]
    :db/ident :collection/owner
    :db/valueType :db.type/ref
    :db/cardinality :db.cardinality/one
-   :db/unique :db.unique/identity
    :db.install/_attribute :db.part/db}
   {:db/id #db/id[:db.part/db]
    :db/ident :collection/description
    :db/valueType :db.type/string
    :db/cardinality :db.cardinality/one
+   :db/fulltext true
+   :db.install/_attribute :db.part/db}
+  {:db/id #db/id[:db.part/db]
+   :db/ident :collection/type1
+   :db/valueType :db.type/string
+   :db/cardinality :db.cardinality/many
    :db/fulltext true
    :db.install/_attribute :db.part/db}
   {:db/id #db/id[:db.part/db]
@@ -28,6 +38,7 @@
    :db/valueType :db.type/ref  ;; reference the items
    :db/cardinality :db.cardinality/many
    :db.install/_attribute :db.part/db}]
+
 
  ;; Item
  [{:db/id #db/id[:db.part/db]
@@ -61,6 +72,11 @@
    :db/valueType :db.type/string
    :db/cardinality :db.cardinality/one
    :db/unique :db.unique/value
+   :db.install/_attribute :db.part/db}
+  {:db/id #db/id[:db.part/db]
+   :db/ident :user/url
+   :db/valueType :db.type/string
+   :db/cardinality :db.cardinality/one
    :db.install/_attribute :db.part/db}
   {:db/id #db/id[:db.part/db]
    :db/ident :user/password

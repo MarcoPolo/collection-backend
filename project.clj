@@ -10,5 +10,8 @@
   :dependencies [[org.clojure/clojure "1.5.0"]
                  [compojure "1.1.5"]
                  [digest "1.4.3"]
+                 [ring-cors "0.1.0"]
+                 [hiccup "1.0.2"]
+                 [sandbar/sandbar "0.4.0-SNAPSHOT"]
                  [org.clojure/data.json "0.2.1"]
                  [com.datomic/datomic-free "0.8.3826"]])

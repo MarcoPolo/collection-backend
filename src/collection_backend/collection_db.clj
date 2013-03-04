@@ -98,10 +98,12 @@
     (get-user-id username)
     (:db/id)
     (q
-      '[:find ?e
-        :in $ ?username :where [?e :item/owner ?username]]
-      (db conn))
-    (map (comp d/touch (partial d/entity (db conn)) first) )))
+      '[:find ?e ?title ?desc 
+        :in $ ?username 
+        :where [?e :item/owner ?username]
+               [?e :item/title ?title]
+               [?e :item/description ?desc]]
+      (db conn))))
 
 (defn get-user-collections [username]
   (->>
@@ -109,9 +111,11 @@
     (:db/id)
     (q
       '[:find ?e
-        :in $ ?username :where [?e :collection/owner ?username]]
-      (db conn))
-    (map (comp d/touch (partial d/entity (db conn)) first) )))
+        :in $ ?username 
+        :where [?e :collection/owner ?username]
+               [?e :collection/title ?title]
+               [?e :collection/description ?desc]]
+      (db conn))))
 
 (defn check-user-items [username items]
   (let [userid (get-user-id username)]
@@ -229,7 +233,7 @@
             "http://upload.wikimedia.org/wikipedia/commons/8/80/Albert_Einstein_1979_USSR_Stamp.jpg")
 
   ;; Get all of the users items
-  (get-user-items "marco")
+  (type (get-user-items "marco"))
 
   ;; Lets add those items to our collection now
   ;; add the collection

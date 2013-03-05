@@ -233,17 +233,23 @@
 
 (defn get-collection-over-time [collection-id]
   (map 
-    (comp (partial get-collection-as-of collection-id) first)
+    (comp (partial get-collection-items-with-db 17592186045445) (partial d/as-of (db conn)) first)
     (get-some-time-points)))
   
-
 (comment 
 
   (map d/touch (:collection/items (get-collection 17592186045445)))
   (json/write-str
     (map #(select-keys % [:item/title :item/url :item/description :db/id]) (get-collection-items-with-db 17592186045445 (db conn))))
     (get-collection-items-with-db 17592186045445 (db conn))
+  (get-collection-items 17592186045445)
 
+  (map (partial get-collection-as-of 17592186045445) (map first (get-some-time-points)))
+  (get-collection-over-time 17592186045445)
+
+  (map
+    (comp (partial get-collection-items-with-db 17592186045445) (partial d/as-of (db conn)) first)
+    (get-some-time-points))
 
 
 

@@ -8,6 +8,8 @@
             [clojure.data.json :as json]
             digest))
 
+
+
 (def custom-session (atom {}))
 
 (defn get-auth-token []
@@ -15,7 +17,8 @@
 
 
 (comment
-  (read-string "false")
+  (read-string "(+ 2 3)")
+  (require '[collection-backend.collection-db :as c-db])
 
   (let [username "marco"
         item-title "asdfff"
@@ -73,9 +76,10 @@
       (map (partial zipmap [:id :title :description :img-url]))
       (json/write-str)))
   (POST "/collectionInfo" [collection-id]
-    (->>
-      (c-db/get-collection-items collection-id )
-      (json/write-str)))
+    (let [collection-id (read-string collection-id)]
+      (->>
+        (c-db/get-collection-items collection-id )
+        (json/write-str))))
   (POST "/addItem" [username item-title item-description item-img-url]
     (println username " has created item " item-title)
     (->>
@@ -91,22 +95,30 @@
         (assoc {:success true} :id)
         (json/write-str))))
   (POST "/addItemToCollection" [username collection-id item-id]
-    (->>
-      (c-db/add-item-to-collection username collection-id item-id)
-      (json/write-str)))
+    (let [collection-id (read-string collection-id)
+          item-id (read-string item-id)]
+      (->>
+        (c-db/add-item-to-collection username collection-id item-id)
+        (json/write-str))))
   (POST "/removeItemFromCollection" [username collection-id item-id]
-    (->>
-      (c-db/remove-item-from-collection username collection-id item-id)
-      (json/write-str)))
+    (let [collection-id (read-string collection-id)
+          item-id (read-string item-id)]
+      (->>
+        (c-db/remove-item-from-collection username collection-id item-id)
+        (json/write-str))))
   (POST "/removeItemFromCollection" [username collection-id item-id]
-    (->>
-      (c-db/remove-item-from-collection username collection-id item-id)
-      (json/write-str)))
+    (let [collection-id (read-string collection-id)
+          item-id (read-string item-id)]
+      (->>
+        (c-db/remove-item-from-collection username collection-id item-id)
+        (json/write-str))))
   (POST "/getItemsinfo" [item-ids]
-    (->>
-      (c-db/get-items-info item-ids)
-      (json/write-str)))
+    (let [item-id (read-string item-ids)]
+      (->>
+        (c-db/get-items-info item-ids)
+        (json/write-str))))
   (POST "/getCollectionOverTime" [collection-id]
-    (->>
-      (c-db/get-collection-over-time collection-id)
-      (json/write-str))))
+    (let [collection-id (read-string collection-id)]
+      (->>
+        (c-db/get-collection-over-time collection-id)
+        (json/write-str)))))

@@ -1,6 +1,6 @@
 # collection-backend
-
-A Clojure library designed to ... well, that part is up to you.
+Backend for collection project for the launch hackathon! 
+My first experiences in using datomic.
 
 ## Usage
 

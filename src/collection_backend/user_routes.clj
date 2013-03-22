@@ -60,9 +60,9 @@
   (POST "/whoami" [] 
     (println "session" (session-get :username))
     (json/write-str (session-get :username nil)))
-  (POST "/register" [username password email]
+  (POST "/register" [username password email picUrl]
     (->>
-      (c-db/create-user username password email)
+      (c-db/create-user username password email picUrl)
       (assoc {} :register)
       (json/write-str)))
   (POST "/items" [username]

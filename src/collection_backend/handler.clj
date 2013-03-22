@@ -11,6 +11,7 @@
 user-routes
 (defroutes app-routes
   (GET "/" [] "Backend works bro, but you need to use POST requests")
+  (GET "/test" [] "Backend works bro, but you need to use POST requests")
   (context "/user" [] user-routes)
   (POST "/search/items" [search-term] 
     (->>
@@ -21,7 +22,7 @@ user-routes
       (c-db/find-collections search-term)
       (json/write-str)))
 
-  (route/not-found "Not Found"))
+  (route/not-found "Not Found, bro!" ))
 
 (def app
   (->

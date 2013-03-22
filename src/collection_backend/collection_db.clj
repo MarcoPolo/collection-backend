@@ -8,7 +8,7 @@
 (def uri "datomic:free://localhost:4334/collection")
 
 ;(d/delete-database uri)
-;(d/create-database uri)
+(d/create-database uri)
 
 (def conn (d/connect uri))
 
@@ -38,7 +38,7 @@
        @(d/transact conn user)
        true
        (catch Exception e
-         false)))))
+         (str false (.toString e)))))))
 
 (defn login [username-or-email password]
   (let [
@@ -105,6 +105,13 @@
       (db conn)
       rule
       search-term)))
+
+(comment 
+
+  (get-user-items "marco")
+  (get-user-id "marco")
+
+  )
 
 (defn get-user-items [username]
   (->>
@@ -236,9 +243,10 @@
     (comp (partial get-collection-items-with-db 17592186045445) (partial d/as-of (db conn)) first)
     (get-some-time-points)))
   
+(create-user "marco" "pass1" "something@cool.co" "https://fbcdn-profile-a.akamaihd.net/hprofile-ak-prn1/50220_247759031908649_1190234970_q.jpg")
 (comment 
 
-  (map d/touch (:collection/items (get-collection 17592186045445)))
+  ;(map d/touch (:collection/items (get-collection 17592186045445)))
   (json/write-str
     (map #(select-keys % [:item/title :item/url :item/description :db/id]) (get-collection-items-with-db 17592186045445 (db conn))))
     (get-collection-items-with-db 17592186045445 (db conn))
@@ -279,8 +287,8 @@
 
 
   ;;User is created
-  (create-user "marco" "pass1" "something@cool.co" "https://fbcdn-profile-a.akamaihd.net/hprofile-ak-prn1/50220_247759031908649_1190234970_q.jpg")
 
+(println "Trying to login as marco " (login "marco" "pass1"))
 
   ;; This is how you add an item
   (def added-item
